@@ -24,7 +24,7 @@ const User = {
     db.query(sqlQuery, callback);
   },
 
-  updateUser: (id,updatedData, callback) => {
+  updateUser: (id, updatedData, callback) => {
     const sqlQuery =
       "update users set name = ?, email = ?, gender = ?, mobile_no = ?, image = ?, is_blocked = ?  where id = ?";
     db.query(
@@ -36,7 +36,7 @@ const User = {
         updatedData.mobile_no,
         updatedData.image,
         updatedData.is_blocked,
-        id
+        id,
       ],
       callback
     );
