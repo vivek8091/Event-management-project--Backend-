@@ -23,6 +23,29 @@ const User = {
     const sqlQuery = "select * from users";
     db.query(sqlQuery, callback);
   },
+
+  updateUser: (id,updatedData, callback) => {
+    const sqlQuery =
+      "update users set name = ?, email = ?, gender = ?, mobile_no = ?, image = ?, is_blocked = ?  where id = ?";
+    db.query(
+      sqlQuery,
+      [
+        updatedData.name,
+        updatedData.email,
+        updatedData.gender,
+        updatedData.mobile_no,
+        updatedData.image,
+        updatedData.is_blocked,
+        id
+      ],
+      callback
+    );
+  },
+
+  deleteUser: (id, callback) => {
+    const sqlQuery = "delete from users where id = ?";
+    db.query(sqlQuery, id, callback);
+  },
 };
 
 module.exports = User;

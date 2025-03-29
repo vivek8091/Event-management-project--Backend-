@@ -23,13 +23,11 @@ exports.registerUser = (req, res) => {
         error: err,
       });
     } else {
-      res
-        .status(201)
-        .json({
-          success: true,
-          message: "User registered successfully...",
-          data: result,
-        });
+      res.status(201).json({
+        success: true,
+        message: "User registered successfully...",
+        data: result,
+      });
     }
   });
 };
@@ -38,12 +36,56 @@ exports.getAllUsers = (req, res) => {
   userModel.getUsers((err, result) => {
     if (err) {
       console.log(err);
-      
+
       return res
         .status(500)
         .json({ success: false, message: "Data did not get!!!" });
     } else {
-      return res.status(200).json({ success: true, message: "successfully fetched data...", data: result});
+      return res.status(200).json({
+        success: true,
+        message: "successfully fetched data...",
+        data: result,
+      });
     }
   });
 };
+
+exports.updateUserData = (req, res) => {
+  const { name, email, gender, mobile_no } = req.body;
+  const id = req.params.id;
+  const image = req.file ? req.file.filename : null;
+  const is_blocked = req.body.is_blocked === "blocked" ? 1 : 0;
+
+  const updatedData = {
+    name,
+    email,
+    gender,
+    mobile_no,
+    image,
+    is_blocked,
+  };
+
+  userModel.updateUser(id, updatedData,(err, result) => {
+    if (err) {
+      console.log(err);
+      return res
+        .status(500)
+        .json({ success: false, message: "Data not updated!!!" });
+    } else {
+      return res.status(201).json({ success: true, message: "Data updated successfully...", data: result});
+    }
+  });
+};
+
+
+exports.deleteUser = (req, res) => {
+  const id = req.params.id;
+  userModel.deleteUser(id, (err, result) => {
+    if (err) {
+      console.log(err);
+      return res.status(500).json({ success: false, message: "Did not delete user data!!!"});
+    } else {
+      return res.status(201).json({ success: true, message: "User deleted successfully...", data: result});
+    }
+  });
+}
