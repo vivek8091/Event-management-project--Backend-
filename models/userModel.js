@@ -18,6 +18,11 @@ const User = {
       callback
     );
   },
+
+  getUsers: (callback) => {
+    const sqlQuery = "select * from users";
+    db.query(sqlQuery, callback);
+  },
 };
 
 module.exports = User;
