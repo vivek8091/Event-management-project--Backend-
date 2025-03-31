@@ -3,6 +3,7 @@ const app = express();
 const port = 2121;
 const userRoutes = require("./routes/userRoutes");
 const eventsRoutes = require("./routes/eventsRoutes");
+const gallaryRoutes = require("./routes/gallaryRoutes");
 const bodyParser = require("body-parser");
 app.use(bodyParser.json());
 
@@ -15,6 +16,7 @@ app.use("/uploads", express.static("uploads"));
 
 app.use("/api/users", userRoutes);
 app.use("/api/events", eventsRoutes);
+app.use("/api/gallary", gallaryRoutes);
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
