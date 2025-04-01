@@ -4,6 +4,8 @@ const port = 2121;
 const userRoutes = require("./routes/userRoutes");
 const eventsRoutes = require("./routes/eventsRoutes");
 const gallaryRoutes = require("./routes/gallaryRoutes");
+const categoryRoutes = require("./routes/categoryRoute");
+const adminRoutes = require("./routes/adminRoutes");
 const bodyParser = require("body-parser");
 app.use(bodyParser.json());
 
@@ -17,6 +19,8 @@ app.use("/uploads", express.static("uploads"));
 app.use("/api/users", userRoutes);
 app.use("/api/events", eventsRoutes);
 app.use("/api/gallary", gallaryRoutes);
+app.use("/api/category", categoryRoutes);
+app.use("/api/admin", adminRoutes);
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
