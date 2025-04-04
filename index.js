@@ -8,6 +8,7 @@ const categoryRoutes = require("./routes/categoryRoute");
 const adminRoutes = require("./routes/adminRoutes");
 const contactRoutes = require("./routes/contactRoutes");
 const bookings = require("./routes/bookingsRoutes");
+const contactListRoutes = require("./routes/contactListRoutes");
 const bodyParser = require("body-parser");
 app.use(bodyParser.json());
 
@@ -25,6 +26,7 @@ app.use("/api/category", categoryRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/contact", contactRoutes);
 app.use("/api/bookings", bookings);
+app.use("/api/contactList", contactListRoutes);
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
