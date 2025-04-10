@@ -72,13 +72,11 @@ exports.updateUserData = (req, res) => {
         .status(500)
         .json({ success: false, message: "Data not updated!!!" });
     } else {
-      return res
-        .status(201)
-        .json({
-          success: true,
-          message: "Data updated successfully...",
-          data: result,
-        });
+      return res.status(201).json({
+        success: true,
+        message: "Data updated successfully...",
+        data: result,
+      });
     }
   });
 };
@@ -92,13 +90,11 @@ exports.deleteUser = (req, res) => {
         .status(500)
         .json({ success: false, message: "Could not delete user data!!!" });
     } else {
-      return res
-        .status(201)
-        .json({
-          success: true,
-          message: "User deleted successfully...",
-          data: result,
-        });
+      return res.status(201).json({
+        success: true,
+        message: "User deleted successfully...",
+        data: result,
+      });
     }
   });
 };
@@ -132,9 +128,46 @@ exports.addEvent = (req, res) => {
   userModel.addEvent(newEvent, (err, result) => {
     if (err) {
       console.log(err);
-      return res.status(500).json({ success: false, message: "Could not add new event!!!"});      
+      return res
+        .status(500)
+        .json({ success: false, message: "Could not add new event!!!" });
     } else {
-      return res.status(201).json({ success: true, message: "New event added successfully..." });
+      return res
+        .status(201)
+        .json({ success: true, message: "New event added successfully..." });
     }
+  });
+};
+
+exports.loginUser = (req, res) => {
+  const { email, password } = req.body;
+
+  userModel.loginUser(email, (err, result) => {
+    if (err) {
+      console.log(err);
+      return res
+        .status(500)
+        .json({ success: false, message: "Server error!!!" });
+    }
+
+    if (result.length === 0) {
+      return res
+        .status(401)
+        .json({ success: false, message: "Email not found!!!" });
+    }
+
+    const user = result[0];
+
+    if (user.password !== password) {
+      return res
+        .status(401)
+        .json({ success: false, message: "Incorrect password!!!" });
+    }
+
+    res.status(200).json({ success: true, message: "Login Successful...", user: {
+      id:user.id,
+      name: user.name,
+      email: user.email,
+    }, });
   });
 };
