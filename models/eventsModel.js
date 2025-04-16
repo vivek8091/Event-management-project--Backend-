@@ -27,6 +27,16 @@ const Events = {
     db.query(sqlQuery, callback);
   },
 
+  getEventById: (id, callback) => {
+    const sqlQuery = "select * from add_event_by_admin where id = ?";
+    db.query(sqlQuery, id, callback);
+  },
+
+  getEventDataByCategory: (category, callback) => {
+    const sqlQuery = "SELECT * FROM add_event_by_admin WHERE event_category_name = ?";
+    db.query(sqlQuery,[category], callback);
+  },
+
   updateEvent: (id, updatedEvent, callback) => {
     const sqlQuery =
       "update add_event_by_admin set event_title = ?, event_start_date = ?, event_end_date = ?, event_start_time = ?, event_end_time = ?, event_price = ?, event_category_name = ?, event_location = ?, event_description = ?, event_image = ? where id = ?";

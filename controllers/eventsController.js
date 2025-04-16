@@ -65,6 +65,26 @@ exports.getEventData = (req, res) => {
   });
 };
 
+exports.getEventDataById = (req, res) => {
+  const eventId = req.params.id;
+  eventsModel.getEventById(eventId, (err, result) => {
+    if (err) {
+      console.log(err);
+      return res
+        .status(500)
+        .json({ success: false, message: "Could not fetch event!!!" });
+    } else {
+      return res
+        .status(200)
+        .json({
+          success: true,
+          message: "Event fetched successfully...",
+          data: result,
+        });
+    }
+  });
+};
+
 exports.updateEvent = (req, res) => {
   const {
     event_title,
@@ -115,14 +135,33 @@ exports.deleteEvent = (req, res) => {
   eventsModel.deleteEvent(eventId, (err, result) => {
     if (err) {
       console.log(err);
-      return res
-        .status(500)
-        .json({
-          success: false,
-          message: "Could not delete event successfully!!!",
-        });
+      return res.status(500).json({
+        success: false,
+        message: "Could not delete event successfully!!!",
+      });
     } else {
-      return res.status(200).json({ success: true, message: "Event deleted successfully..." });
+      return res
+        .status(200)
+        .json({ success: true, message: "Event deleted successfully..." });
+    }
+  });
+};
+
+exports.getEventByCatetory = (req, res) => {
+  const category = req.params.event_category_name;
+  eventsModel.getEventDataByCategory(category, (err, result) => {
+    if (err) {
+      console.log(err);
+      return res.status(500).json({
+        success: false,
+        message: "Could not fetch event successfully!!!",
+      });
+    } else {
+      return res.status(200).json({
+        success: true,
+        message: "Event fetched successfully...",
+        data: result,
+      });
     }
   });
 };
