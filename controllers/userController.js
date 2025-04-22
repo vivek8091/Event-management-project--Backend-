@@ -54,7 +54,6 @@ exports.updateUserData = (req, res) => {
   const { name, email, gender, mobile_no } = req.body;
   const id = req.params.id;
   const image = req.file ? req.file.filename : null;
-  const is_blocked = req.body.is_blocked === "blocked" ? 1 : 0;
 
   const updatedData = {
     name,
@@ -62,7 +61,6 @@ exports.updateUserData = (req, res) => {
     gender,
     mobile_no,
     image,
-    is_blocked,
   };
 
   userModel.updateUser(id, updatedData, (err, result) => {
@@ -72,10 +70,26 @@ exports.updateUserData = (req, res) => {
         .status(500)
         .json({ success: false, message: "Data not updated!!!" });
     } else {
-      return res.status(201).json({
-        success: true,
-        message: "Data updated successfully...",
-        data: result,
+      userModel.getUserById(id, (err2, updatedUser) => {
+        if (err2) {
+          return res.status(500).json({
+            success: false,
+            message: "Could not fetch updated data!!!",
+          });
+        } else {
+          return res.status(200).json({
+            success: true,
+            message: "Data updated successfully...",
+            updatedUser: {
+              id,
+              name,
+              email,
+              gender,
+              mobile_no,
+              image,
+            }, // Send full updated user data
+          });
+        }
       });
     }
   });
@@ -164,10 +178,17 @@ exports.loginUser = (req, res) => {
         .json({ success: false, message: "Incorrect password!!!" });
     }
 
-    res.status(200).json({ success: true, message: "Login Successful...", user: {
-      id:user.id,
-      name: user.name,
-      email: user.email,
-    }, });
+    res.status(200).json({
+      success: true,
+      message: "Login Successful...",
+      user: {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        gender: user.gender,
+        mobile_no: user.mobile_no,
+        image: user.image,
+      },
+    });
   });
 };

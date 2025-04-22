@@ -24,6 +24,11 @@ const User = {
     db.query(sqlQuery, callback);
   },
 
+  getUserById: (id, callback) => {
+    const sqlQuery = "select * from users where id = ?";
+    db.query(sqlQuery, id, callback);
+  },
+
   loginUser: (email, callback) => {
     const sqlQuery = "select * from users where email = ?";
     db.query(sqlQuery, [email], callback);
@@ -31,7 +36,7 @@ const User = {
 
   updateUser: (id, updatedData, callback) => {
     const sqlQuery =
-      "update users set name = ?, email = ?, gender = ?, mobile_no = ?, image = ?, is_blocked = ?  where id = ?";
+      "update users set name = ?, email = ?, gender = ?, mobile_no = ?, image = ?  where id = ?";
     db.query(
       sqlQuery,
       [
@@ -40,7 +45,6 @@ const User = {
         updatedData.gender,
         updatedData.mobile_no,
         updatedData.image,
-        updatedData.is_blocked,
         id,
       ],
       callback
