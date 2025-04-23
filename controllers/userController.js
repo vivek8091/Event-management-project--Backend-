@@ -192,3 +192,37 @@ exports.loginUser = (req, res) => {
     });
   });
 };
+
+exports.updatePassword = (req, res) => {
+  const userId = req.params.id;
+  const { oldPassword, newPassword } = req.body;
+
+  userModel.getUserById(userId, (err, result) => {
+    if (err || result.length === 0) {
+      return res
+        .status(404)
+        .json({ success: false, message: "User not found!" });
+    }
+
+    const user = result[0];
+
+    if (user.password !== oldPassword) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Old password is incorrect!" });
+    }
+
+    userModel.changePassword(userId, newPassword, (err, result) => {
+      if (err) {
+        return res.status(500).json({
+          success: false,
+          message: "Error while updating password!!!",
+        });
+      } else {
+        return res
+          .status(200)
+          .json({ success: true, message: "Password updated successfully..." });
+      }
+    });
+  });
+};

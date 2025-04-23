@@ -16,6 +16,7 @@ router.put(
   upload.single("image"),
   userController.updateUserData
 );
+router.put("/changePassword/:id", userController.updatePassword);
 
 // APIs to delete data from tables...
 router.delete("/deleteUser/:id", userController.deleteUser);

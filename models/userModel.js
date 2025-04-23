@@ -51,6 +51,11 @@ const User = {
     );
   },
 
+  changePassword: (id, newPassword, callback) => {
+    const sqlQuery = "update users set password = ? where id = ?";
+    db.query(sqlQuery, [newPassword, id], callback);
+  },
+
   deleteUser: (id, callback) => {
     const sqlQuery = "delete from users where id = ?";
     db.query(sqlQuery, id, callback);
