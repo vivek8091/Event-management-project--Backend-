@@ -3,10 +3,11 @@ const db = require("../config/db");
 const Bookings = {
   addBooking: (newBooking, callback) => {
     const sqlQuery =
-      "insert into event_bookings ( booking_title, ticket_id, event_date_time, event_location, booking_date, booking_price, booking_image) values (?,?,?,?,?,?,?)";
+      "insert into event_bookings (user_id, booking_title, ticket_id, event_date_time, event_location, booking_date, booking_price, booking_image) values (?,?,?,?,?,?,?,?)";
     db.query(
       sqlQuery,
       [
+        newBooking.userId,
         newBooking.booking_title,
         newBooking.ticket_id,
         newBooking.event_date_time,

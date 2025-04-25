@@ -3,7 +3,7 @@ const db = require("../config/db");
 const Contact = {
   addContact: (contactData, callback) => {
     const sqlQuery =
-      "insert into contact_details (name, email, country, phone_no) values (?,?,?,?)";
+      "insert into contact_details (name, email, country, phone_no, message) values (?,?,?,?,?)";
     db.query(
       sqlQuery,
       [
@@ -11,6 +11,7 @@ const Contact = {
         contactData.email,
         contactData.country,
         contactData.phone_no,
+        contactData.message,
       ],
       callback
     );
@@ -23,7 +24,7 @@ const Contact = {
 
   updateContact: (id, updatedContact, callback) => {
     const sqlQuery =
-      "update contact_details set name = ?, email = ?, country = ?, phone_no = ? where id = ?";
+      "update contact_details set name = ?, email = ?, country = ?, phone_no = ?, message = ? where id = ?";
     db.query(
       sqlQuery,
       [
@@ -31,6 +32,7 @@ const Contact = {
         updatedContact.email,
         updatedContact.country,
         updatedContact.phone_no,
+        updatedContact.message,
         id,
       ],
       callback

@@ -1,12 +1,13 @@
 const contactModel = require("../models/contactModel");
 
 exports.createContact = (req, res) => {
-  const { name, email, country, phone_no } = req.body;
+  const { name, email, country, phone_no, message } = req.body;
   const contactData = {
     name,
     email,
     country,
     phone_no,
+    message,
   };
 
   contactModel.addContact(contactData, (err, result) => {
@@ -50,6 +51,7 @@ exports.updateContact = (req, res) => {
     email,
     country,
     phone_no,
+    message,
   };
 
   contactModel.updateContact(id, updatedContact, (err, result) => {

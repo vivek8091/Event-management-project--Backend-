@@ -86,3 +86,41 @@ exports.deleteAdmin = (req, res) => {
     }
   });
 };
+
+exports.adminLogin = (req, res) => {
+  const { email, password } = req.body;
+  adminModel.login(email, (err, result) => {
+    if (err) {
+      console.log(err);
+      return res
+        .status(500)
+        .json({ success: false, message: "Server error!!!" });
+    }
+
+    if (result.length === 0) {
+      return res
+        .status(401)
+        .json({ success: false, message: "Email not found!!!" });
+    }
+
+    const admin = result[0];
+
+    if (admin.password !== password) {
+      return res
+        .status(401)
+        .json({ success: false, message: "Incorrect password!!!" });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Login Successful...",
+      admin: {
+        id: admin.id,
+        name: admin.name,
+        email: admin.email,
+        phone_no: admin.phone_no,
+        image: admin.image,
+      },
+    });
+  });
+};

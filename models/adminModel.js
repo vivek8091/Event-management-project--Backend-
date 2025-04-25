@@ -31,6 +31,11 @@ const Admin = {
     const sqlQuery = "delete from admin_details where id = ?";
     db.query(sqlQuery, id, callback);
   },
+
+  login: (email, callback) => {
+    const sqlQuery = "select * from admin_details where email = ?";
+    db.query(sqlQuery, email, callback);
+  },
 };
 
 module.exports = Admin;
