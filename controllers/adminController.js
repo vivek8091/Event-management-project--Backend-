@@ -50,7 +50,7 @@ exports.updateAdmin = (req, res) => {
   const updatedAdmin = {
     name,
     email,
-    image,
+    image: image === null ? undefined : image,
   };
 
   adminModel.updateAdmin(id, updatedAdmin, (err, result) => {

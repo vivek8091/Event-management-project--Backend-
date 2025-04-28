@@ -17,14 +17,17 @@ const Admin = {
   },
 
   updateAdmin: (id, updatedAdmin, callback) => {
+    const { name, email, image } = updatedAdmin;
     const sqlQuery =
-      "update admin_details set name = ?, email = ?, image = ? where id = ?";
-    db.query(sqlQuery, [
-      updatedAdmin.name,
-      updatedAdmin.email,
-      updatedAdmin.image,
-      id
-    ], callback);
+      "update admin_details set name = ?, email = ? where id = ?";
+    const params = [name, email, id];
+
+    if (image) {
+      sqlQuery =
+        "UPDATE admin_details SET name = ?, email = ?, image = ? WHERE id = ?";
+      params.push(image);
+    }
+    db.query(sqlQuery, params, callback);
   },
 
   deleteAdmin: (id, callback) => {
