@@ -118,9 +118,46 @@ exports.adminLogin = (req, res) => {
         id: admin.id,
         name: admin.name,
         email: admin.email,
-        phone_no: admin.phone_no,
         image: admin.image,
       },
+    });
+  });
+};
+
+exports.updatePassword = (req, res) => {
+  const adminId = req.params.id;
+  const { oldPassword, newPassword } = req.body;
+
+  adminModel.getAdminById(adminId, (err, result) => {
+    if (err || result.length === 0) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Admin not found!!!" });
+    }
+
+    const admin = result[0];
+
+    if (admin.password !== oldPassword) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Old password is incorrect!!!" });
+    }
+
+    adminModel.changePassword(adminId, newPassword, (err2, results) => {
+      if (err2) {
+        return res.status(500).json({
+          success: false,
+          message: "Error while changing password!!!",
+        });
+      } else {
+        return res
+          .status(200)
+          .json({
+            success: true,
+            message: "Password updated successfully...",
+            newPassword: newPassword,
+          });
+      }
     });
   });
 };

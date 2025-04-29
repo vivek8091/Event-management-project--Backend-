@@ -39,6 +39,16 @@ const Admin = {
     const sqlQuery = "select * from admin_details where email = ?";
     db.query(sqlQuery, email, callback);
   },
+
+  getAdminById: (id, callback) => {
+    const sqlQuery = "select * from admin_details where id = ?";
+    db.query(sqlQuery, id, callback);
+  },
+
+  changePassword: (id, newPassword, callback) => {
+    const sqlQuery = "update admin_details set password = ?  where id = ?";
+    db.query(sqlQuery, [newPassword, id], callback);
+  },
 };
 
 module.exports = Admin;
