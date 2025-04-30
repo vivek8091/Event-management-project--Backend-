@@ -10,6 +10,7 @@ router.post(
 );
 
 router.get("/getBookings", bookingController.getBookings);
+router.get("/getBookingsByUser/:user_id", bookingController.getBookingByUser);
 
 router.put(
   "/updateBooking/:id",

@@ -7,7 +7,7 @@ const Bookings = {
     db.query(
       sqlQuery,
       [
-        newBooking.userId,
+        newBooking.user_id,
         newBooking.booking_title,
         newBooking.ticket_id,
         newBooking.event_date_time,
@@ -23,6 +23,11 @@ const Bookings = {
   getBookings: (callback) => {
     const sqlQuery = "select * from event_bookings";
     db.query(sqlQuery, callback);
+  },
+
+  fetchBookingsByUser: (user_id, callback) => {
+    const sqlQuery = "select * from event_bookings where user_id = ?";
+    db.query(sqlQuery, user_id, callback);
   },
 
   updateBookings: (id, updatedBooking, callback) => {
