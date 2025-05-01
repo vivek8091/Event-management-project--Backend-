@@ -5,7 +5,6 @@ const bookingController = require("../controllers/bookingsController");
 
 router.post(
   "/createBooking",
-  upload.single("booking_image"),
   bookingController.createBooking
 );
 

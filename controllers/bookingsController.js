@@ -1,36 +1,25 @@
 const bookingModel = require("../models/bookingsModel");
 
-const mysqlDateTimeFormat = (isoString) => {
-  const date = new Date(isoString);
-  const year = date.getFullYear();
-  const month = `0${date.getMonth() + 1}`.slice(-2);
-  const day = `0${date.getDate()}`.slice(-2);
-  const hours = `0${date.getHours()}`.slice(-2);
-  const minutes = `0${date.getMinutes()}`.slice(-2);
-  const seconds = `0${date.getSeconds()}`.slice(-2);
-  return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-};
-
 exports.createBooking = (req, res) => {
-  const eventDateTimeFormatted = mysqlDateTimeFormat(req.body.event_date_time);
   const {
     user_id,
     booking_title,
     ticket_id,
+    event_date_time,
     event_location,
     booking_date,
     booking_price,
   } = req.body;
-  const booking_image = req.file ? req.file.filename : null;
+  const booking_image =req.body.booking_image || null;
   const bookingData = {
     user_id,
     booking_title,
     ticket_id,
-    event_date_time: eventDateTimeFormatted,
+    event_date_time,
     event_location,
     booking_date,
     booking_price,
-    booking_image,
+    booking_image: booking_image || null,
   };
 
   bookingModel.addBooking(bookingData, (err, result) => {

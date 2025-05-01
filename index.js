@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const path = require('path');
 const port = 2121;
 const cors = require("cors");
 const userRoutes = require("./routes/userRoutes");
@@ -26,7 +27,7 @@ app.use(
   })
 );
 
-app.use("/uploads", express.static("uploads"));
+app.use("/uploads", express.static(path.join(__dirname, 'uploads')));
 
 app.use("/api/users", userRoutes);
 app.use("/api/events", eventsRoutes);
