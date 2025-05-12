@@ -1,4 +1,6 @@
 const userModel = require("../models/userModel");
+const jwt = require("jsonwebtoken");
+const SECRET_KEY = "event_management_system_9901";
 
 exports.registerUser = (req, res) => {
   const { name, email, gender, mobile_no, password } = req.body;
@@ -26,24 +28,6 @@ exports.registerUser = (req, res) => {
       res.status(201).json({
         success: true,
         message: "User registered successfully...",
-        data: result,
-      });
-    }
-  });
-};
-
-exports.getAllUsers = (req, res) => {
-  userModel.getUsers((err, result) => {
-    if (err) {
-      console.log(err);
-
-      return res
-        .status(500)
-        .json({ success: false, message: "Data did not get!!!" });
-    } else {
-      return res.status(200).json({
-        success: true,
-        message: "successfully fetched data...",
         data: result,
       });
     }
@@ -178,9 +162,19 @@ exports.loginUser = (req, res) => {
         .json({ success: false, message: "Incorrect password!!!" });
     }
 
+    const token = jwt.sign(
+      {
+        id: user.id,
+        email: user.email,
+      },
+      SECRET_KEY,
+      { expiresIn: "1h" }
+    );
+
     res.status(200).json({
       success: true,
       message: "Login Successful...",
+      token: token,
       user: {
         id: user.id,
         name: user.name,

@@ -49,6 +49,11 @@ const Admin = {
     const sqlQuery = "update admin_details set password = ?  where id = ?";
     db.query(sqlQuery, [newPassword, id], callback);
   },
+
+  getUsers: (callback) => {
+    const sqlQuery = "select * from users";
+    db.query(sqlQuery, callback);
+  },
 };
 
 module.exports = Admin;

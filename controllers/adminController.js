@@ -1,4 +1,6 @@
 const adminModel = require("../models/adminModel");
+const jwt = require("jsonwebtoken");
+const SECRET_KEY = "event_management_admin_9901";
 
 exports.createAdmin = (req, res) => {
   const { name, email, password } = req.body;
@@ -111,9 +113,19 @@ exports.adminLogin = (req, res) => {
         .json({ success: false, message: "Incorrect password!!!" });
     }
 
+    const token = jwt.sign(
+      {
+        id: admin.id,
+        email: admin.email,
+      },
+      SECRET_KEY,
+      { expiresIn: "1h" }
+    );
+
     res.status(200).json({
       success: true,
       message: "Login Successful...",
+      token: token,
       admin: {
         id: admin.id,
         name: admin.name,
@@ -150,14 +162,30 @@ exports.updatePassword = (req, res) => {
           message: "Error while changing password!!!",
         });
       } else {
-        return res
-          .status(200)
-          .json({
-            success: true,
-            message: "Password updated successfully...",
-            newPassword: newPassword,
-          });
+        return res.status(200).json({
+          success: true,
+          message: "Password updated successfully...",
+          newPassword: newPassword,
+        });
       }
     });
+  });
+};
+
+exports.getAllUsers = (req, res) => {
+  adminModel.getUsers((err, result) => {
+    if (err) {
+      console.log(err);
+
+      return res
+        .status(500)
+        .json({ success: false, message: "Data did not get!!!" });
+    } else {
+      return res.status(200).json({
+        success: true,
+        message: "successfully fetched data...",
+        data: result,
+      });
+    }
   });
 };

@@ -7,16 +7,18 @@ const userController = require("../controllers/userController");
 router.post("/register", upload.single("image"), userController.registerUser);
 router.post("/login", userController.loginUser);
 
-// APIs to select(read) data from tables...
-router.get("/getUsers", userController.getAllUsers);
-
 // APIs to update data from tables...
 router.put(
   "/updateUser/:id",
+
   upload.single("image"),
   userController.updateUserData
 );
-router.put("/changePassword/:id", userController.updatePassword);
+router.put(
+  "/changePassword/:id",
+
+  userController.updatePassword
+);
 
 // APIs to delete data from tables...
 router.delete("/deleteUser/:id", userController.deleteUser);

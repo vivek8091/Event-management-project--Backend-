@@ -19,11 +19,6 @@ const User = {
     );
   },
 
-  getUsers: (callback) => {
-    const sqlQuery = "select * from users";
-    db.query(sqlQuery, callback);
-  },
-
   getUserById: (id, callback) => {
     const sqlQuery = "select * from users where id = ?";
     db.query(sqlQuery, id, callback);
