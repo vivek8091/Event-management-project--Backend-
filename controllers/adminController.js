@@ -176,7 +176,6 @@ exports.getAllUsers = (req, res) => {
   adminModel.getUsers((err, result) => {
     if (err) {
       console.log(err);
-
       return res
         .status(500)
         .json({ success: false, message: "Data did not get!!!" });
