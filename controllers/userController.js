@@ -1,6 +1,6 @@
 const userModel = require("../models/userModel");
 const jwt = require("jsonwebtoken");
-const SECRET_KEY = "event_management_system_9901";
+const SECRET_KEY = "event_management_admin_9901";
 
 exports.registerUser = (req, res) => {
   const { name, email, gender, mobile_no, password } = req.body;
@@ -166,6 +166,7 @@ exports.loginUser = (req, res) => {
       {
         id: user.id,
         email: user.email,
+        role: "user",
       },
       SECRET_KEY,
       { expiresIn: "1h" }

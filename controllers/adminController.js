@@ -117,6 +117,7 @@ exports.adminLogin = (req, res) => {
       {
         id: admin.id,
         email: admin.email,
+        role: "admin"
       },
       SECRET_KEY,
       { expiresIn: "1h" }

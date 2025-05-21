@@ -22,6 +22,6 @@ router.put(
 );
 
 // APIs to delete data from tables...
-router.delete("/deleteUser/:id", userController.deleteUser);
+router.delete("/deleteUser/:id",userAuthToken, userController.deleteUser);
 
 module.exports = router;

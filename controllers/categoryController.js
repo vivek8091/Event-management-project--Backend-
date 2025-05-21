@@ -32,6 +32,8 @@ exports.getCategoryData = (req, res) => {
         .status(500)
         .json({ success: false, message: "Could not fetch category data!!!" });
     } else {
+      console.log(result);
+      
       return res.status(200).json({
         success: true,
         message: "Category data fetched successfully...",
