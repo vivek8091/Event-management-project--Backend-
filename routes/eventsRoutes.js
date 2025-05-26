@@ -10,7 +10,7 @@ router.post(
   "/addEvent",
   upload.single("event_image"),
   authenticateToken,
-  // authorizedRoles("admin"),
+  authorizedRoles("admin"),
   eventsController.addNewEvent
 );
 
@@ -18,13 +18,13 @@ router.post(
 router.get(
   "/getEventData",
   authenticateToken,
-  authorizedRoles("user"),
+  authorizedRoles("user", "admin"),
   eventsController.getEventData
 );
 router.get(
   "/getEventById/:id",
   authenticateToken,
-  // authorizedRoles("user"),
+  authorizedRoles("user", "admin"),
   eventsController.getEventDataById
 );
 
@@ -33,7 +33,7 @@ router.put(
   "/updateEvent/:id",
   upload.single("event_image"),
   authenticateToken,
-  // authorizedRoles("admin"),
+  authorizedRoles("admin"),
   eventsController.updateEvent
 );
 
@@ -41,7 +41,7 @@ router.put(
 router.delete(
   "/deleteEvent/:id",
   authenticateToken,
-  // authorizedRoles("admin"),
+  authorizedRoles("admin"),
   eventsController.deleteEvent
 );
 
@@ -49,7 +49,7 @@ router.delete(
 router.get(
   "/getEventByCategory/:event_category_name",
   authenticateToken,
-  // authorizedRoles("user"),
+  authorizedRoles("user", "admin"),
   eventsController.getEventByCatetory
 );
 
